@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-exception-quiz"
+version = "1.0.0"
+description = "A fun and educational quiz game to test your knowledge of Python's exception hierarchy!"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Python Exception Quiz Team"},
+]
+keywords = ["python", "exceptions", "quiz", "education", "learning", "game"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Education",
+    "Topic :: Games/Entertainment :: Puzzle Games",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.6"
+dependencies = []
+
+[project.optional-dependencies]
+gui = ["pygame>=2.0.0"]
+full = ["pygame>=2.0.0"]
+
+[project.scripts]
+python-exception-quiz = "python_exception_quiz.main:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/python-exception-quiz"
+Documentation = "https://github.com/yourusername/python-exception-quiz#readme"
+Repository = "https://github.com/yourusername/python-exception-quiz.git"
+"Bug Tracker" = "https://github.com/yourusername/python-exception-quiz/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["python_exception_quiz*"]
+
+[tool.setuptools.package-data]
+# Data files are now in separate data/ directory
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.black]
+line-length = 100
+target-version = ['py36', 'py37', 'py38', 'py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"
+line-length = 100

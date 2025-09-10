@@ -1,0 +1,6 @@
+
+[full]
+pygame>=2.0.0
+
+[gui]
+pygame>=2.0.0

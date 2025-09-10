@@ -1,0 +1,2 @@
+[console_scripts]
+python-exception-quiz = python_exception_quiz.main:main
