@@ -53,7 +53,7 @@ def build_executable(platform="auto"):
     cmd.extend([
         "--add-data", "data:data",      # Include data directory
         "--add-data", "src:src",        # Include source directory
-        "main.py"
+        "quiz.py"                       # Use quiz.py as main entry point
     ])
     
     print(f"Building executable with command: {' '.join(cmd)}")
