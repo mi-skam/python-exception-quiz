@@ -80,7 +80,16 @@ def build_executable(platform="auto"):
 
 def create_dist_package():
     """Create a distribution package with the executable and assets."""
-    if not os.path.exists("dist/PythonExceptionQuiz"):
+    # Look for executable with or without .exe extension
+    exe_path = None
+    if os.path.exists("dist/PythonExceptionQuiz.exe"):
+        exe_path = "dist/PythonExceptionQuiz.exe"
+        exe_name = "PythonExceptionQuiz.exe"
+    elif os.path.exists("dist/PythonExceptionQuiz"):
+        exe_path = "dist/PythonExceptionQuiz"
+        exe_name = "PythonExceptionQuiz"
+    
+    if not exe_path:
         print("Executable not found. Run build first.")
         return False
     
@@ -92,7 +101,7 @@ def create_dist_package():
     os.makedirs(package_dir)
     
     # Copy executable
-    shutil.copy("dist/PythonExceptionQuiz", f"{package_dir}/PythonExceptionQuiz")
+    shutil.copy(exe_path, f"{package_dir}/{exe_name}")
     
     # Copy data files if they exist
     if os.path.exists("data"):
