@@ -37,7 +37,8 @@ jobs:
     - name: Install dependencies
       run: |
         uv sync
-        uv pip install pygame pyinstaller
+        uv add pygame pyinstaller
+        uv pip list
     
     - name: Install system dependencies (Ubuntu)
       if: matrix.os == 'ubuntu-latest'
@@ -47,7 +48,12 @@ jobs:
     
     - name: Build executable
       run: |
+        ls -la
+        ls -la data/
+        ls -la src/
         python build_executable.py --package
+      env:
+        PYTHONPATH: ${{ github.workspace }}
     
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
