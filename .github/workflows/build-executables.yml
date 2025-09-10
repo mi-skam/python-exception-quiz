@@ -1,0 +1,87 @@
+name: Build Multi-Platform Executables
+
+on:
+  push:
+    tags:
+      - 'v*'  # Trigger on version tags like v1.0.0
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            executable: PythonExceptionQuiz
+          - os: windows-latest
+            platform: windows  
+            executable: PythonExceptionQuiz.exe
+          - os: macos-latest
+            platform: macos
+            executable: PythonExceptionQuiz
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install uv
+      run: pip install uv
+    
+    - name: Install dependencies
+      run: |
+        uv sync
+        uv pip install pygame pyinstaller
+    
+    - name: Install system dependencies (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libfreetype6-dev
+    
+    - name: Build executable
+      run: |
+        python build_executable.py --package
+    
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: python-exception-quiz-${{ matrix.platform }}
+        path: dist/PythonExceptionQuiz_Package/
+        retention-days: 30
+  
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+    
+    - name: Create release packages
+      run: |
+        cd artifacts
+        for platform in linux windows macos; do
+          if [ -d "python-exception-quiz-$platform" ]; then
+            zip -r "python-exception-quiz-$platform.zip" "python-exception-quiz-$platform"
+          fi
+        done
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: artifacts/*.zip
+        generate_release_notes: true
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
