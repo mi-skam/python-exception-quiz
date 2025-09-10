@@ -470,7 +470,7 @@ class GUIQuizGame:
         self.screen.blit(code_title_surface, (20, code_y))
         
         # Code box
-        code_box = pygame.Rect(20, code_y + 30, self.screen.get_width() - 40, 200)
+        code_box = pygame.Rect(20, code_y + 30, self.screen.get_width() - 40, 300)
         pygame.draw.rect(self.screen, COLORS['surface'], code_box)
         pygame.draw.rect(self.screen, COLORS['border'], code_box, 2)
         
