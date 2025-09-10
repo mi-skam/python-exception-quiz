@@ -117,7 +117,7 @@ A fun and educational quiz game to learn Python exception handling!
 1. Double-click `PythonExceptionQuiz` to start the game
 2. View Python code snippets and identify which exception will be raised
 3. Type your answer and press Enter
-4. Progress through levels: Simple → Intermediate → Expert
+4. Progress through levels: Simple -> Intermediate -> Expert
 5. Compete for high scores!
 
 ## Controls
@@ -135,7 +135,7 @@ A fun and educational quiz game to learn Python exception handling!
 Enjoy learning Python exceptions!
 """
     
-    with open(f"{package_dir}/README.txt", "w") as f:
+    with open(f"{package_dir}/README.txt", "w", encoding="utf-8") as f:
         f.write(readme_content)
     
     print(f"Distribution package created: {package_dir}/")
