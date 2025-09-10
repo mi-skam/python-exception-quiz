@@ -2,7 +2,13 @@
 
 A fun and educational quiz game to test your knowledge of Python's exception hierarchy! Learn which exceptions are raised by different code scenarios through interactive gameplay.
 
-![Python Exception Quiz GUI](https://github.com/user-attachments/assets/4d4b4b5e-8a92-4c4d-bd5a-1a2d8c9f0e3b)
+## Screenshots
+
+### Game Introduction
+![Game Introduction](assets/intro.png)
+
+### Interactive Gameplay with Autocomplete
+![Interactive Gameplay](assets/in-game.png)
 
 ## Quick Start
 
