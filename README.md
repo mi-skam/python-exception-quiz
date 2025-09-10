@@ -7,12 +7,12 @@ A fun and educational quiz game to test your knowledge of Python's exception hie
 ### Simple Launch (Recommended)
 ```bash
 # Auto-detects and launches the best available interface
-python main.py
+python quiz.py
 ```
 
 The game automatically:
-1. **Launches GUI** (if pygame is available)
-2. **Falls back to TUI** (if curses is available) 
+1. **Launch GUI** (if pygame is available)
+2. **Fall back to TUI** (if curses is available) 
 3. **Shows error** with installation instructions if neither works
 
 ## Installation & Setup
@@ -23,20 +23,20 @@ The game automatically:
 git clone <repository>
 cd python-exception-quiz
 pip install -e .[gui]  # Install with pygame
-python main.py
+python quiz.py
 ```
 
 ### Development Installation
 ```bash
 # Install in development mode
 pip install -e .
-python main.py
+python quiz.py
 ```
 
 ### Alternative: Manual Dependencies
 ```bash
 pip install pygame  # For GUI version
-python main.py
+python quiz.py
 ```
 
 ## Package Structure
@@ -66,20 +66,20 @@ python-exception-quiz/
 ### Normal Gameplay
 ```bash
 # Auto-detect best interface (recommended)
-python main.py
+python quiz.py
 
 # Force specific interface
-python main.py gui    # Pygame GUI
-python main.py tui    # Terminal UI
+python quiz.py gui    # Pygame GUI
+python quiz.py tui    # Terminal UI
 ```
 
 ### Development & Debug
 ```bash
 # View game statistics
-python main.py cli --stats
+python quiz.py cli --stats
 
 # View high scores
-python main.py cli --scores
+python quiz.py cli --scores
 
 # Run tests
 python -m pytest test/
@@ -106,7 +106,7 @@ The game auto-detects and launches interfaces in this order:
 2. **TUI (curses)** - Rich terminal interface with colors and visual elements  
 3. **Error message** - With clear installation instructions
 
-The CLI version is available for debugging and development use.
+The CLI version is available for Debug/Development use.
 
 ## Game Controls
 

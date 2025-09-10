@@ -36,7 +36,7 @@ def _detect_best_interface():
 def _launch_tui(data_dir):
     """Launch TUI version with error handling."""
     try:
-        from tui_quiz import main as tui_main
+        from src.python_exception_quiz.tui_quiz import main as tui_main
         tui_main(data_dir)
     except ImportError as e:
         print(f"TUI interface error: {e}")
@@ -82,8 +82,8 @@ Examples:
                        help='Force specific interface (optional)')
     
     parser.add_argument('--data-dir', 
-                       default='.',
-                       help='Directory containing game data files (default: current directory)')
+                       default='data',
+                       help='Directory containing game data files (default: data directory)')
     
     parser.add_argument('--stats', 
                        action='store_true',
@@ -119,7 +119,7 @@ Examples:
                 sys.exit(1)
                 
             try:
-                from pygame_quiz import GUIQuizGame
+                from src.python_exception_quiz.pygame_quiz import GUIQuizGame
                 gui_game = GUIQuizGame(args.data_dir)
                 gui_game.run()
             except ImportError:
@@ -137,7 +137,7 @@ Examples:
             _launch_tui(args.data_dir)
                 
         elif args.interface == 'cli':
-            from cli_quiz import CLIQuizGame
+            from src.python_exception_quiz.cli_quiz import CLIQuizGame
             cli_game = CLIQuizGame(args.data_dir)
             
             if args.stats:

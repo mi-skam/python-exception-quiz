@@ -59,7 +59,9 @@ def build_executable(platform="auto"):
     print(f"Building executable with command: {' '.join(cmd)}")
     
     try:
-        subprocess.check_call(cmd)
+        # Use uv run to ensure we're using the correct environment
+        uv_cmd = ["uv", "run"] + cmd
+        subprocess.check_call(uv_cmd)
         print("\n✅ Build successful!")
         
         # List the created files

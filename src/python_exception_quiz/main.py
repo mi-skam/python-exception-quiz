@@ -95,9 +95,19 @@ Examples:
     
     args = parser.parse_args()
     
+    # Handle PyInstaller bundled resources
+    if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+        # Running in a PyInstaller bundle
+        bundle_dir = sys._MEIPASS
+        args.data_dir = os.path.join(bundle_dir, 'data')
+    
     # Validate data directory and required files
     if not os.path.exists(args.data_dir):
         print(f"Error: Data directory '{args.data_dir}' does not exist!")
+        print(f"Current working directory: {os.getcwd()}")
+        print(f"Looking for data in: {os.path.abspath(args.data_dir)}")
+        if getattr(sys, 'frozen', False):
+            print(f"Bundle directory: {sys._MEIPASS}")
         sys.exit(1)
     
     levels_file = os.path.join(args.data_dir, 'levels.json')

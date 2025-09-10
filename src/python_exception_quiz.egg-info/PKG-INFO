@@ -26,6 +26,7 @@ Classifier: Topic :: Games/Entertainment :: Puzzle Games
 Classifier: Topic :: Software Development :: Libraries :: Python Modules
 Requires-Python: >=3.6
 Description-Content-Type: text/markdown
+Requires-Dist: pyinstaller>=4.10
 Provides-Extra: gui
 Requires-Dist: pygame>=2.0.0; extra == "gui"
 Provides-Extra: full

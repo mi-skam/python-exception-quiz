@@ -10,14 +10,38 @@ import sys
 from typing import Dict, List, Tuple, Optional
 from datetime import datetime
 
+def get_resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller."""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    
+    return os.path.join(base_path, relative_path)
+
 class ExceptionQuizGame:
     """Core game engine for the Python Exception Quiz."""
     
     def __init__(self, data_dir: str = "data"):
-        self.data_dir = data_dir
-        self.levels_file = os.path.join(data_dir, "levels.json")
-        self.scores_file = os.path.join(data_dir, "highscores.json")
-        self.save_file = os.path.join(data_dir, "savegame.json")
+        # Handle PyInstaller bundled resources
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            # Read-only data from bundle
+            self.data_dir = get_resource_path(data_dir)
+            self.levels_file = os.path.join(self.data_dir, "levels.json")
+            
+            # Writable files go to user's home directory
+            from pathlib import Path
+            user_data_dir = Path.home() / ".python_exception_quiz"
+            user_data_dir.mkdir(exist_ok=True)
+            self.scores_file = str(user_data_dir / "highscores.json")
+            self.save_file = str(user_data_dir / "savegame.json")
+        else:
+            # Development mode - everything in data_dir
+            self.data_dir = data_dir
+            self.levels_file = os.path.join(self.data_dir, "levels.json")
+            self.scores_file = os.path.join(self.data_dir, "highscores.json")
+            self.save_file = os.path.join(self.data_dir, "savegame.json")
         
         # Python exception hierarchy for autocomplete
         self.python_exceptions = [

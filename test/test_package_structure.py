@@ -20,13 +20,27 @@ def test_package_structure():
         'src/python_exception_quiz/cli_quiz.py',
         'src/python_exception_quiz/tui_quiz.py',
         'src/python_exception_quiz/pygame_quiz.py',
-        'src/python_exception_quiz/levels.json',
+    ]
+    
+    expected_data_files = [
+        'data/levels.json',
+        'data/highscores.json',
+        'data/savegame.json',
     ]
     
     base_path = os.path.join(os.path.dirname(__file__), '..')
     all_exist = True
     
     for file_path in expected_files:
+        full_path = os.path.join(base_path, file_path)
+        if os.path.exists(full_path):
+            print(f"  ✓ {file_path}")
+        else:
+            print(f"  ✗ {file_path} - Missing")
+            all_exist = False
+    
+    # Check data files
+    for file_path in expected_data_files:
         full_path = os.path.join(base_path, file_path)
         if os.path.exists(full_path):
             print(f"  ✓ {file_path}")
@@ -76,7 +90,7 @@ def test_relative_imports():
     
     try:
         from python_exception_quiz.cli_quiz import CLIQuizGame
-        cli_game = CLIQuizGame('.')
+        cli_game = CLIQuizGame('data')  # Point to data directory
         print("  ✓ CLI quiz with relative imports works")
     except Exception as e:
         print(f"  ✗ CLI relative imports failed: {e}")
@@ -134,7 +148,7 @@ def test_data_files():
     
     try:
         from python_exception_quiz.game_engine import ExceptionQuizGame
-        game = ExceptionQuizGame('../src/python_exception_quiz')
+        game = ExceptionQuizGame('data')  # Point to data directory
         
         # Test that levels load
         if hasattr(game, 'levels') and game.levels:

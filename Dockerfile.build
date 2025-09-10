@@ -1,0 +1,40 @@
+# Multi-stage Dockerfile for cross-platform builds
+FROM python:3.11-slim as base
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libsdl2-dev \
+    libsdl2-image-dev \
+    libsdl2-mixer-dev \
+    libsdl2-ttf-dev \
+    libfreetype6-dev \
+    libportmidi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install uv
+RUN pip install uv
+
+# Set working directory
+WORKDIR /app
+
+# Copy project files
+COPY . .
+
+# Linux build stage
+FROM base as linux-build
+
+RUN uv sync
+RUN uv pip install pygame pyinstaller
+RUN python build_executable.py --package
+RUN mv dist/PythonExceptionQuiz_Package dist/linux_x64
+
+# Final stage with all builds
+FROM base as final
+
+COPY --from=linux-build /app/dist/linux_x64 /builds/linux_x64/
+
+# Create a simple script to extract builds
+RUN echo '#!/bin/bash\ncp -r /builds/* /output/' > /extract.sh && chmod +x /extract.sh
+
+CMD ["/extract.sh"]

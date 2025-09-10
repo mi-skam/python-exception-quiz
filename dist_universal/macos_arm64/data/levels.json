@@ -1,0 +1,112 @@
+{
+  "levels": [
+    {
+      "level": 1,
+      "difficulty": "simple",
+      "questions": [
+        {
+          "code": "x = int('abc')",
+          "correct_answer": "ValueError",
+          "explanation": "int() cannot convert the string 'abc' to an integer",
+          "context": "Type conversion with invalid string"
+        },
+        {
+          "code": "my_list = [1, 2, 3]\nprint(my_list[5])",
+          "correct_answer": "IndexError",
+          "explanation": "Accessing index 5 in a list of length 3",
+          "context": "List index out of range"
+        },
+        {
+          "code": "my_dict = {'a': 1}\nprint(my_dict['b'])",
+          "correct_answer": "KeyError",
+          "explanation": "Key 'b' doesn't exist in the dictionary",
+          "context": "Dictionary key access"
+        },
+        {
+          "code": "x = 10 / 0",
+          "correct_answer": "ZeroDivisionError",
+          "explanation": "Division by zero is mathematically undefined",
+          "context": "Basic arithmetic operation"
+        },
+        {
+          "code": "import nonexistent_module",
+          "correct_answer": "ModuleNotFoundError",
+          "explanation": "Trying to import a module that doesn't exist",
+          "context": "Module import"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "difficulty": "intermediate",
+      "questions": [
+        {
+          "code": "class MyClass:\n    def __init__(self):\n        self.x = 1\n\nobj = MyClass()\nprint(obj.nonexistent_attr)",
+          "correct_answer": "AttributeError",
+          "explanation": "Accessing an attribute that doesn't exist on the object",
+          "context": "Object attribute access"
+        },
+        {
+          "code": "def my_func(a, b, c):\n    return a + b + c\n\nmy_func(1, 2)",
+          "correct_answer": "TypeError",
+          "explanation": "Function expects 3 arguments but only 2 were provided",
+          "context": "Function call with wrong number of arguments"
+        },
+        {
+          "code": "x = None\nprint(x.upper())",
+          "correct_answer": "AttributeError",
+          "explanation": "None object doesn't have an upper() method",
+          "context": "Method call on None object"
+        },
+        {
+          "code": "with open('nonexistent_file.txt', 'r') as f:\n    content = f.read()",
+          "correct_answer": "FileNotFoundError",
+          "explanation": "File doesn't exist in the filesystem",
+          "context": "File operations"
+        },
+        {
+          "code": "x = [1, 2, 3]\ny = x.pop()\nz = x.pop()\nw = x.pop()\nv = x.pop()",
+          "correct_answer": "IndexError",
+          "explanation": "Trying to pop from an empty list",
+          "context": "List operations"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "difficulty": "expert",
+      "questions": [
+        {
+          "code": "import threading\n\ndef worker():\n    raise ValueError('Worker error')\n\nthread = threading.Thread(target=worker)\nthread.start()\nthread.join()",
+          "correct_answer": "ValueError",
+          "explanation": "Exception raised in thread propagates when joined",
+          "context": "Threading and exception propagation"
+        },
+        {
+          "code": "class CustomMeta(type):\n    def __getattr__(cls, name):\n        if name == 'forbidden':\n            raise RuntimeError('Access denied')\n        return super().__getattr__(name)\n\nclass MyClass(metaclass=CustomMeta):\n    pass\n\nMyClass.forbidden",
+          "correct_answer": "RuntimeError",
+          "explanation": "Custom metaclass raises RuntimeError for 'forbidden' attribute",
+          "context": "Metaclass attribute access control"
+        },
+        {
+          "code": "import weakref\n\nclass MyClass:\n    pass\n\nobj = MyClass()\nweak_ref = weakref.ref(obj)\ndel obj\nweak_ref().__str__()",
+          "correct_answer": "ReferenceError",
+          "explanation": "Weak reference accessed after object was garbage collected",
+          "context": "Weak references and garbage collection"
+        },
+        {
+          "code": "def generator():\n    yield 1\n    yield 2\n    return 'done'\n\ng = generator()\nnext(g)\nnext(g)\nnext(g)",
+          "correct_answer": "StopIteration",
+          "explanation": "Generator exhausted, StopIteration contains return value",
+          "context": "Generator exhaustion"
+        },
+        {
+          "code": "import sys\n\nclass InfiniteRecursion:\n    def __getattr__(self, name):\n        return getattr(self, name + '_')\n\nobj = InfiniteRecursion()\nobj.test",
+          "correct_answer": "RecursionError",
+          "explanation": "Infinite recursion in __getattr__ exceeds maximum recursion depth",
+          "context": "Recursion limits and __getattr__"
+        }
+      ]
+    }
+  ]
+}

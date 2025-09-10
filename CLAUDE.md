@@ -1,0 +1,1 @@
+- we are using uv to manage dev and runtime dependencies. look at @pyproject.toml

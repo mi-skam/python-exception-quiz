@@ -51,7 +51,7 @@ jobs:
         ls -la
         ls -la data/
         ls -la src/
-        python build_executable.py --package
+        uv run python build_executable.py --package
       env:
         PYTHONPATH: ${{ github.workspace }}
     

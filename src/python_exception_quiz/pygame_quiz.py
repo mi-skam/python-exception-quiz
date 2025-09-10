@@ -227,16 +227,12 @@ class GUIQuizGame:
         self.screen = pygame.display.set_mode((1024, 768))
         pygame.display.set_caption("Python Exception Hierarchy Quiz")
         
-        # Load fonts with better fallbacks
-        try:
-            # Try to use system monospace font for code
-            self.font_code = pygame.freetype.SysFont('monospace', 20)
-        except:
-            self.font_code = pygame.freetype.Font(None, 20)
-            
-        self.font_large = pygame.freetype.Font(None, 32)
-        self.font_medium = pygame.freetype.Font(None, 24)
-        self.font_small = pygame.freetype.Font(None, 18)
+        # Load fonts - Use SysFont which works in PyInstaller bundles
+        # pygame.freetype.Font(None) doesn't work in bundles, but SysFont does
+        self.font_code = pygame.freetype.SysFont('Courier New', 20)
+        self.font_large = pygame.freetype.SysFont('Arial', 32)
+        self.font_medium = pygame.freetype.SysFont('Arial', 24) 
+        self.font_small = pygame.freetype.SysFont('Arial', 18)
         
         self.clock = pygame.time.Clock()
         self.game = ExceptionQuizGame(data_dir)

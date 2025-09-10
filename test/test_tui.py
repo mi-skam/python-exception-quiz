@@ -3,7 +3,9 @@
 
 import sys
 import os
-import importlib.util
+
+# Add src to path for testing
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 def test_tui_imports():
     """Test that TUI can be imported and basic structures work."""
@@ -16,14 +18,14 @@ def test_tui_imports():
         return False
     
     try:
-        from tui_quiz import TUIQuizGame
+        from python_exception_quiz.tui_quiz import TUIQuizGame
         print("✓ TUIQuizGame can be imported")
     except ImportError as e:
         print(f"✗ Failed to import TUIQuizGame: {e}")
         return False
     
     try:
-        from game_engine import ExceptionQuizGame
+        from python_exception_quiz.game_engine import ExceptionQuizGame
         print("✓ ExceptionQuizGame can be imported")
     except ImportError as e:
         print(f"✗ Failed to import ExceptionQuizGame: {e}")
@@ -34,10 +36,10 @@ def test_tui_imports():
 def test_game_engine():
     """Test the game engine works correctly."""
     print("\nTesting game engine...")
-    from game_engine import ExceptionQuizGame
+    from src.python_exception_quiz.game_engine import ExceptionQuizGame
     
     try:
-        game = ExceptionQuizGame()
+        game = ExceptionQuizGame('data')
         print("✓ Game engine initialized")
         
         # Test autocomplete
@@ -91,11 +93,11 @@ def test_tui_structure():
         stdscr = curses.initscr()
         curses.start_color()
         
-        from tui_quiz import TUIQuizGame
-        mock_screen = MockStdscr()
+        from src.python_exception_quiz.tui_quiz import TUIQuizGame
+        mock_screen = MockStdScr()
         
         # Test initialization
-        tui = TUIQuizGame(mock_screen)
+        tui = TUIQuizGame(mock_screen, 'data')
         print("✓ TUI initialized with mock screen")
         
         # Clean up curses
