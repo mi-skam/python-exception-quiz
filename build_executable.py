@@ -62,7 +62,7 @@ def build_executable(platform="auto"):
         # Use uv run to ensure we're using the correct environment
         uv_cmd = ["uv", "run"] + cmd
         subprocess.check_call(uv_cmd)
-        print("\n✅ Build successful!")
+        print("\nBuild successful!")
         
         # List the created files
         dist_path = Path("dist")
@@ -75,13 +75,13 @@ def build_executable(platform="auto"):
         return True
         
     except subprocess.CalledProcessError as e:
-        print(f"❌ Build failed with error: {e}")
+        print(f"Build failed with error: {e}")
         return False
 
 def create_dist_package():
     """Create a distribution package with the executable and assets."""
     if not os.path.exists("dist/PythonExceptionQuiz"):
-        print("❌ Executable not found. Run build first.")
+        print("Executable not found. Run build first.")
         return False
     
     # Create package directory
@@ -129,7 +129,7 @@ Enjoy learning Python exceptions!
     with open(f"{package_dir}/README.txt", "w") as f:
         f.write(readme_content)
     
-    print(f"✅ Distribution package created: {package_dir}/")
+    print(f"Distribution package created: {package_dir}/")
     return True
 
 def main():
@@ -144,16 +144,16 @@ def main():
     
     args = parser.parse_args()
     
-    print("🔨 Building Python Exception Quiz executable...")
+    print("Building Python Exception Quiz executable...")
     
     if build_executable(args.platform):
         if args.package:
             create_dist_package()
         
-        print("\n📦 Ready for itch.io upload!")
+        print("\nReady for itch.io upload!")
         print("Upload the files in the 'dist/' directory to itch.io as a downloadable game.")
     else:
-        print("\n❌ Build failed. Check the error messages above.")
+        print("\nBuild failed. Check the error messages above.")
         sys.exit(1)
 
 if __name__ == "__main__":
